@@ -1,22 +1,17 @@
----
-title: "Homework 2"
-author: Wuraola Olawole
-output: github_document
----
+Homework 2
+================
+Wuraola Olawole
 
-
-
-```{r initial setup, message = FALSE}
-
+``` r
 library(tidyverse)
 library(readxl)
 ```
 
 # Problem 1
 
-Read dataset, Mr. Trashwheel
+Read dataset, Mr. Trashwheel
 
-```{r}
+``` r
 trashwheel_df =
 
     read_xlsx(
@@ -24,6 +19,4 @@ trashwheel_df =
     "./Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx",
     sheet = "Mr. Trash Wheel",
     range = cell_cols("A:N")) 
-  
 ```
-
