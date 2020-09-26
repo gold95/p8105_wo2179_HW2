@@ -18,5 +18,11 @@ trashwheel_df =
     
     "./Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx",
     sheet = "Mr. Trash Wheel",
-    range = cell_cols("A:N")) 
+      range = cell_cols("A:N")) %>%
+        janitor::clean_names() %>%
+drop_na(dumpster) %>%
+  mutate(
+    sports_balls = round(sports_balls),
+      sports_balls = as.integer(sports_balls)
+  )
 ```
