@@ -94,16 +94,28 @@ path_3_data = "./Data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv"
 NYC_df = 
     
   read_csv(
-            path_3_data) %>% 
-   janitor::clean_names() %>% 
-    select(2:18, 20, 23)
+           path_3_data) %>% 
+              janitor::clean_names() %>% 
+                select(2:18, 20, 23)
 ```
 
 Convert ‘entry’ variable from character to logical: created a variable
 enter\_df and modified it
 
 ``` r
- enter_df = select(NYC_df, entry)
-  entry_df = enter_df %>%
-    mutate_all(funs(as.logical(.)))
+  enter_df = select(NYC_df, entry)
+    entry_df = enter_df %>%
+      mutate_all(funs(as.logical(.)))
+```
+
+Modified NYC\_df via mutate to change entry into entry\_df which is now
+a logical variable
+
+``` r
+  NYC_df =  
+          NYC_df %>%
+            mutate(
+                   entry = entry_df)
+
+NYC1_df = na.omit(NYC_df)
 ```
