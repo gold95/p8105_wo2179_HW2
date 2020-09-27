@@ -99,19 +99,11 @@ NYC_df =
     select(2:18, 20, 23)
 ```
 
-    ## Parsed with column specification:
-    ## cols(
-    ##   .default = col_character(),
-    ##   `Station Latitude` = col_double(),
-    ##   `Station Longitude` = col_double(),
-    ##   Route8 = col_double(),
-    ##   Route9 = col_double(),
-    ##   Route10 = col_double(),
-    ##   Route11 = col_double(),
-    ##   ADA = col_logical(),
-    ##   `Free Crossover` = col_logical(),
-    ##   `Entrance Latitude` = col_double(),
-    ##   `Entrance Longitude` = col_double()
-    ## )
+Convert ‘entry’ variable from character to logical: created a variable
+enter\_df and modified it
 
-    ## See spec(...) for full column specifications.
+``` r
+ enter_df = select(NYC_df, entry)
+  entry_df = enter_df %>%
+    mutate_all(funs(as.logical(.)))
+```

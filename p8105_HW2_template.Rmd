@@ -100,7 +100,8 @@ Precipi_df =
 # problem 2
 
 Read the NYC~ csv data, and only include select variables
-```{r NYC_df}
+
+```{r NYC_df, message = FALSE}
 
 path_3_data = "./Data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv"
   
@@ -111,6 +112,14 @@ NYC_df =
    janitor::clean_names() %>% 
     select(2:18, 20, 23)
   
+```
+Convert 'entry' variable from character to logical: created a variable enter_df and modified it
+
+```{r enter_df, warning = FALSE }
+
+ enter_df = select(NYC_df, entry)
+  entry_df = enter_df %>%
+    mutate_all(funs(as.logical(.)))
 ```
 
 
