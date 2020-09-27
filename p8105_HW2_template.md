@@ -83,3 +83,35 @@ Precipi_df =
 Precipi_df =
             left_join(Precipi_df, month_df, by = "month")
 ```
+
+# problem 2
+
+Read the NYC\~ csv data, and only include select variables
+
+``` r
+path_3_data = "./Data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv"
+  
+NYC_df = 
+    
+  read_csv(
+            path_3_data) %>% 
+   janitor::clean_names() %>% 
+    select(2:18, 20, 23)
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   .default = col_character(),
+    ##   `Station Latitude` = col_double(),
+    ##   `Station Longitude` = col_double(),
+    ##   Route8 = col_double(),
+    ##   Route9 = col_double(),
+    ##   Route10 = col_double(),
+    ##   Route11 = col_double(),
+    ##   ADA = col_logical(),
+    ##   `Free Crossover` = col_logical(),
+    ##   `Entrance Latitude` = col_double(),
+    ##   `Entrance Longitude` = col_double()
+    ## )
+
+    ## See spec(...) for full column specifications.

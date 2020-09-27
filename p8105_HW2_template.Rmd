@@ -85,13 +85,32 @@ month_df =
             month_name = month.name
     )
 ```
-```{r Precip_17 + precip_18}
+```{r Precip_17_18}
 
 Precipi_df = 
             bind_rows(Precipi_17_df, Precipi_18_df)
 
 Precipi_df =
             left_join(Precipi_df, month_df, by = "month")
+```
+
+
+
+
+# problem 2
+
+Read the NYC~ csv data, and only include select variables
+```{r NYC_df}
+
+path_3_data = "./Data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv"
+  
+NYC_df = 
+    
+  read_csv(
+            path_3_data) %>% 
+   janitor::clean_names() %>% 
+    select(2:18, 20, 23)
+  
 ```
 
 
