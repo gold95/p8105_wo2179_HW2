@@ -8,8 +8,8 @@ output: github_document
 
 ```{r initial setup, message = FALSE}
 
-library(tidyverse)
-library(readxl)
+    library(tidyverse)
+      library(readxl)
 ```
 
 # Problem 1
@@ -18,7 +18,7 @@ set a path
 
 ```{r set_path}
 
-path_2_data = "./Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx"
+  path_2_data = "./Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx"
 
 ```
 
@@ -110,26 +110,35 @@ NYC_df =
   read_csv(
            path_3_data) %>% 
               janitor::clean_names() %>% 
-                select(2:18, 20, 23)
+                select(2:18, 20, 23) %>%
+  mutate(
+    entry = recode(entry, "YES" = TRUE, "NO" = FALSE))
   
 ```
-Convert 'entry' variable from character to logical: created a variable enter_df and modified it
 
-```{r enter_df, warning = FALSE }
-
-  enter_df = select(NYC_df, entry)
-    entry_df = enter_df %>%
-      mutate_all(funs(as.logical(.)))
-```
-
-Modified NYC_df via mutate to change entry into entry_df which is now a logical variable
 ```{r}
 
-  NYC_df =  
-          NYC_df %>%
-            mutate(
-                   entry = entry_df)
+NYC_station = distinct(NYC_df, line, station_name)
+distinct(NYC_df, station_name)
 
-NYC1_df = na.omit(NYC_df)
+```
+
+```{r}
+
+NYC_ada = 
+          select(NYC_df, ada) %>%
+  filter(ada == TRUE)
+
+```
+
+```{r}
+
+NYC_vend = 
+          select(NYC_df, entry, vending)
+  
+```
+
+```{r}
+
 ```
 

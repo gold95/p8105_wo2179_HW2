@@ -3,8 +3,8 @@ Homework 2
 Wuraola Olawole
 
 ``` r
-library(tidyverse)
-library(readxl)
+    library(tidyverse)
+      library(readxl)
 ```
 
 # Problem 1
@@ -12,7 +12,7 @@ library(readxl)
 set a path
 
 ``` r
-path_2_data = "./Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx"
+  path_2_data = "./Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx"
 ```
 
 Read dataset, Mr. Trashwheel, set parameters, and modify sports\_balls
@@ -96,26 +96,38 @@ NYC_df =
   read_csv(
            path_3_data) %>% 
               janitor::clean_names() %>% 
-                select(2:18, 20, 23)
+                select(2:18, 20, 23) %>%
+  mutate(
+    entry = recode(entry, "YES" = TRUE, "NO" = FALSE))
 ```
 
-Convert ‘entry’ variable from character to logical: created a variable
-enter\_df and modified it
-
 ``` r
-  enter_df = select(NYC_df, entry)
-    entry_df = enter_df %>%
-      mutate_all(funs(as.logical(.)))
+NYC_station = distinct(NYC_df, line, station_name)
+distinct(NYC_df, station_name)
 ```
 
-Modified NYC\_df via mutate to change entry into entry\_df which is now
-a logical variable
+    ## # A tibble: 356 x 1
+    ##    station_name            
+    ##    <chr>                   
+    ##  1 25th St                 
+    ##  2 36th St                 
+    ##  3 45th St                 
+    ##  4 53rd St                 
+    ##  5 59th St                 
+    ##  6 77th St                 
+    ##  7 86th St                 
+    ##  8 95th St                 
+    ##  9 9th St                  
+    ## 10 Atlantic Av-Barclays Ctr
+    ## # ... with 346 more rows
 
 ``` r
-  NYC_df =  
-          NYC_df %>%
-            mutate(
-                   entry = entry_df)
+NYC_ada = 
+          select(NYC_df, ada) %>%
+  filter(ada == TRUE)
+```
 
-NYC1_df = na.omit(NYC_df)
+``` r
+NYC_vend = 
+          select(NYC_df, entry, vending)
 ```
