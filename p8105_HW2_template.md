@@ -117,3 +117,35 @@ path_3_data = "./Data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv"
     entry = recode(entry, "YES" = TRUE, "NO" = FALSE)) %>%
     mutate_at(vars(route8:route11), as.character)             # convert dbl variables to chr variables
 ```
+
+Tidy data\! and convert route\~ from rows to column and stored their
+values as route numbers
+
+``` r
+  NYC_df =
+          NYC_df %>%
+                pivot_longer(                                                    # Tidy data! 
+                              route1:route11, 
+                              names_to = "route_name", 
+                              values_to = "route_num") %>%
+    
+                      relocate(route_name, route_num, .before = entrance_type)
+```
+
+The NYC\_Transit dataset provides information about New York city
+Transportation system. The data includes information about train lines,
+station name, station location, available routes, types of entrance,
+entry and vending information. The data also includes ADA compliance of
+the various stations. Some steps I have taken to clean this data
+include, cleaning variable names, selecting the variables I need, and
+converting select variables to a format that would be useful and easy to
+manipulate. I also tidied the data, converting the route names from
+numerous rows into a single column thereby improving the readability of
+my dataset. Finally, I moved a variable around to keep with the flow of
+data. The dimension of the resulting dataset is (20548, 10). The
+resulting data is tidier than the initial data.
+
+There are 465 distinct stations in this dataset and 84 of these stations
+are ADA compliant. The proportion of station entrances that allow
+entrance without vending is 43. There are 60 distinct stations that
+serve the A train. Of these, only 17 of them are ADA compliant.
