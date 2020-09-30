@@ -140,3 +140,37 @@ Tidy data! and convert route~ from rows to column and stored their values as rou
 
 There are `r NYC_df %>% distinct(line, station_name) %>% nrow()` distinct stations in this dataset and `r NYC_df %>% distinct(line, station_name, ada)%>% filter(ada == TRUE) %>% nrow()` of these stations are ADA compliant. The proportion of station entrances that allow entrance without vending is `r NYC_df %>%distinct(line, station_name, entry, vending) %>% filter(entry == TRUE, vending == "NO") %>% nrow()`. There are `r NYC_df %>%distinct(line, station_name, route_name, route_num) %>% filter(route_num == "A") %>% nrow()` distinct stations that serve the A train. Of these, only `r NYC_df %>%distinct(line, station_name, route_name, route_num, ada) %>% filter(route_num == "A", ada == TRUE) %>% nrow()` of them are ADA compliant. 
 
+# Problem 3
+
+Read dataset pols-month.csv, clean the datasets, and use function 'separate' to split "mon" into year, month and day. Also, convert from character variable to numeric. 
+
+```{r read_pols_month_df, message = FALSE}
+
+path_4_data = "./Data/fivethirtyeight_datasets/pols-month.csv"
+
+  pols_month_df =
+  
+                  read_csv(
+                           path_4_data) %>%
+    janitor::clean_names() %>%
+      separate(col = mon, into = c("Year", "Month", "Day"), sep = "-") %>%
+        mutate(Year = as.numeric(Year),
+               Month = as.numeric(Month),
+               Day = as.numeric(Day)) 
+  
+
+```
+Replace Month number with Month name by creating a tibble helper and then perform a left_join *(Note to self: This Month_df variable differs from month_df in Trashwheel. This is uppercased the other is not)
+
+```{r Month_modify}
+
+Month_df =
+    tibble(
+            Month = 1:12,
+            Month_name = month.name)
+
+    pols1_month_df =
+                    left_join(pols_month_df, Month_df, by = "Month") %>%
+                      relocate(Month_name, .before = Day) 
+          
+```

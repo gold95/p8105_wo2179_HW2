@@ -149,3 +149,39 @@ There are 465 distinct stations in this dataset and 84 of these stations
 are ADA compliant. The proportion of station entrances that allow
 entrance without vending is 43. There are 60 distinct stations that
 serve the A train. Of these, only 17 of them are ADA compliant.
+
+# Problem 3
+
+Read dataset pols-month.csv, clean the datasets, and use function
+‘separate’ to split “mon” into year, month and day. Also, convert from
+character variable to numeric.
+
+``` r
+path_4_data = "./Data/fivethirtyeight_datasets/pols-month.csv"
+
+  pols_month_df =
+  
+                  read_csv(
+                           path_4_data) %>%
+    janitor::clean_names() %>%
+      separate(col = mon, into = c("Year", "Month", "Day"), sep = "-") %>%
+        mutate(Year = as.numeric(Year),
+               Month = as.numeric(Month),
+               Day = as.numeric(Day)) 
+```
+
+Replace Month number with Month name by creating a tibble helper and
+then perform a left\_join \*(Note to self: This Month\_df variable
+differs from month\_df in Trashwheel. This is uppercased the other is
+not)
+
+``` r
+Month_df =
+    tibble(
+            Month = 1:12,
+            Month_name = month.name)
+
+    pols1_month_df =
+                    left_join(pols_month_df, Month_df, by = "Month") %>%
+                      relocate(Month_name, .before = Day) 
+```
