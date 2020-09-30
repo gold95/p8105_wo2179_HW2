@@ -226,3 +226,32 @@ path_5_data = "./Data/fivethirtyeight_datasets/snp.csv"
     ##   date = col_character(),
     ##   close = col_double()
     ## )
+
+Replace Month number with Month name by creating a tibble helper and
+then perform a left\_join. Also remove variable ‘Day’
+
+``` r
+    snp1_df =
+                    left_join(snp_df, Month_df, by = "Month") %>%
+                      relocate(Month_name, .after = Month) %>%
+                        select(-Day)
+```
+
+Read unemployment dataset, tidy it and switch from “wide” to “long”
+format using ‘pivot\_longer’
+
+``` r
+path_6_data = "./Data/fivethirtyeight_datasets/unemployment.csv"
+
+  unemploy_df =
+  
+                  read_csv(
+                           path_6_data) %>%
+    janitor::clean_names() %>%
+      rename(Year = year) %>%
+    
+        pivot_longer(                                                    # Tidy data! 
+                      jan:dec, 
+                        names_to = "Month_name", 
+                          values_to = "percent")
+```
