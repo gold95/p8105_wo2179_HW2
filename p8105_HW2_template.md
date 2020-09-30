@@ -185,3 +185,44 @@ Month_df =
                     left_join(pols_month_df, Month_df, by = "Month") %>%
                       relocate(Month_name, .before = Day) 
 ```
+
+Create a ‘president’ variable that takes values gop and dem but remove
+Prez\_dem, prez\_gop and day variable. The outcome gives a df containing
+info about the number of politician in a certain timeframe who are
+either democrats or republicans
+
+``` r
+  pols2_month_df =
+                  pols1_month_df %>%
+                    select(-prez_gop, -prez_dem, -Day) %>%
+  
+                              pivot_longer(                                                    # Tidy data! 
+                                           gov_gop:rep_dem, 
+                                              names_to = "president", 
+                                                values_to = "num_of_cand")
+```
+
+Read snp.csv dataset, clean and perform similar steps as above, also
+keep positions of year and month consistent
+
+``` r
+path_5_data = "./Data/fivethirtyeight_datasets/snp.csv"
+
+  snp_df =
+  
+                  read_csv(
+                           path_5_data) %>%
+    janitor::clean_names() %>%
+      separate(col = date, into = c("Day", "Month", "Year"), sep = "/") %>%
+        mutate(Year = as.numeric(Year),
+               Month = as.numeric(Month),
+               Day = as.numeric(Day)) %>%
+    
+    relocate(Year, .before = Month)
+```
+
+    ## Parsed with column specification:
+    ## cols(
+    ##   date = col_character(),
+    ##   close = col_double()
+    ## )
