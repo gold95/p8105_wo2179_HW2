@@ -9,7 +9,7 @@ Wuraola Olawole
 
 # Problem 1
 
-set a path
+Set a path
 
 ``` r
   path_2_data = "./Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx"
@@ -37,7 +37,9 @@ trashwheel_df =
 Read data on Precipitation in 2017 and in 2018 and add variable “year”
 
 ``` r
-Precipi_17_df =
+path_2_data = "./Data/Trash-Wheel-Collection-Totals-8-6-19.xlsx"
+
+  precipi_17_df =
   
   read_excel(
               path = path_2_data,
@@ -52,7 +54,7 @@ Precipi_17_df =
 ```
 
 ``` r
-Precipi_18_df =
+precipi_18_df =
   
   read_excel(
                 path = path_2_data,
@@ -77,57 +79,41 @@ month_df =
 ```
 
 ``` r
-Precipi_df = 
-            bind_rows(Precipi_17_df, Precipi_18_df)
+precipi_df = 
+            bind_rows(precipi_17_df, precipi_18_df)
 
-Precipi_df =
-            left_join(Precipi_df, month_df, by = "month")
+precipi_df =
+            left_join(precipi_df, month_df, by = "month")
 ```
+
+Mr. TrashWheel data set contained data about trash that was collected in
+a dumpster (by Mr. TrashWheel) as it entered the inner harbor in
+Baltimore Maryland. The data set contained variables year and date of
+trash collection as well as the weights in tons and volume of the trash
+collected. It also provided information about the categories of trash
+collected in the dumpster. In this data set (final outcome), there were
+344. There were also additional sheets that provided information about
+precipitation; the month and total amount of precipitation in 2017 and
+2018.
+
+The total precipitation observed in 2018 was 70.33 inches and the median
+number of sports balls in the dumpster in 2017 was 8.
 
 # problem 2
 
-Read the NYC\~ csv data, and only include select variables
+Read the NYC\~ csv data, retain select variables,convert ‘entry’
+variable from character to logical variable using the ‘recode’ function.
 
 ``` r
 path_3_data = "./Data/NYC_Transit_Subway_Entrance_And_Exit_Data.csv"
   
-NYC_df = 
+  NYC_df = 
     
-  read_csv(
-           path_3_data) %>% 
+    read_csv(
+             path_3_data) %>% 
               janitor::clean_names() %>% 
                 select(2:18, 20, 23) %>%
   mutate(
-    entry = recode(entry, "YES" = TRUE, "NO" = FALSE))
-```
-
-``` r
-NYC_station = distinct(NYC_df, line, station_name)
-distinct(NYC_df, station_name)
-```
-
-    ## # A tibble: 356 x 1
-    ##    station_name            
-    ##    <chr>                   
-    ##  1 25th St                 
-    ##  2 36th St                 
-    ##  3 45th St                 
-    ##  4 53rd St                 
-    ##  5 59th St                 
-    ##  6 77th St                 
-    ##  7 86th St                 
-    ##  8 95th St                 
-    ##  9 9th St                  
-    ## 10 Atlantic Av-Barclays Ctr
-    ## # ... with 346 more rows
-
-``` r
-NYC_ada = 
-          select(NYC_df, ada) %>%
-  filter(ada == TRUE)
-```
-
-``` r
-NYC_vend = 
-          select(NYC_df, entry, vending)
+    entry = recode(entry, "YES" = TRUE, "NO" = FALSE)) %>%
+    mutate_at(vars(route8:route11), as.character)             # convert dbl variables to chr variables
 ```
