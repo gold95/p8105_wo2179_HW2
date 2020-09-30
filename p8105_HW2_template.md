@@ -255,3 +255,27 @@ path_6_data = "./Data/fivethirtyeight_datasets/unemployment.csv"
                         names_to = "Month_name", 
                           values_to = "percent")
 ```
+
+Merge snp dataset into pols data set\!
+
+``` r
+merge1_df = merge(pols2_month_df, snp1_df, all = TRUE)
+
+merge2_df = 
+            merge(merge1_df, unemploy_df, all = TRUE) %>%
+              select(-Month) 
+```
+
+This dataset is made up of 3 separate data sets. The first dataset, pols
+contains data about the number of politician in a certain timeframe
+(1947- 2015) who were either democrats or republicans. The resulting
+dataset had variables year, month name, president and number of
+candidates. The dimensions of this data set was 4932, 5. The second
+dataset snp.csv gives information about the date and closing value of
+s\&p stock index.The key variables in the final dataset were year, month
+name and closing value. The year ranged from the most recent 2015 to
+1950. The dimension of the data was 787, 4. The last dataset,
+Unemployment.csv contains data about the percentage of unemployment in
+certain years 1948 - 2015. The key variables in this dataset were years,
+month names and percent. The dimension of the final dataset was 816, 3.
+The final merged version of the datasets has dimension 9162, 6.
